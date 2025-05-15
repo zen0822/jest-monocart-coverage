@@ -1,11 +1,29 @@
 module.exports = {
+    collectCoverageFrom: [
+        '**/*.{js,jsx,ts,tsx,vue}',
+        '!**/node_modules/**',
+        '!**/vendor/**',
+    ],
+    moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'jsx', 'vue'],
 
+    testEnvironment: 'jsdom',
+    testEnvironmentOptions: {
+        customExportConditions: ["node", "node-addons"],
+     },
+     
     // Enable coverage
     collectCoverage: true,
     // Recommended to use `v8` to support the generation of native v8 coverage reports.
     coverageProvider: 'v8',
     // Monocart can also support all coverage reports, so there is no need to set up reports here.
     coverageReporters: ['none'],
+
+    transform: {
+        '^.+\\.m?[tj]sx?$': ['babel-jest', {
+            plugins: ['@babel/plugin-transform-private-methods']
+        }],
+        '^.+\\.(vue)$': '@vue/vue3-jest',
+    },
 
     reporters: [
         // If custom reporters are specified, the default Jest reporter will be overridden. If you wish to keep it, 'default' must be passed as a reporters name:
